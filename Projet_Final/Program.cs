@@ -69,3 +69,62 @@ for (int f = 1; f < lignes.Length; f++)
     clients.Add(client);
         
 }
+
+
+
+
+//fonction qui pose la question à l'utilisateur
+static string Question()
+{
+    Console.WriteLine("\t1) Voir liste voiture\n" +
+                      "\t2) Historique d'achat (croissant)\n" +
+                      "\t3) Ajouter un client\n" +
+                      "\t4) Ajouter une voiture\n" +
+                      "\t5) Faire un achat de voiture\n" +
+                      "fin");
+
+    string reply = Console.ReadLine();
+    return reply;
+}
+
+//fonction main
+void Main(string[] args)
+{
+    string reply = Question();
+    
+    if (reply == "1")
+    {
+        Console.WriteLine("Affichage de la liste des voitures");
+    }
+
+    if (reply == "2")
+    {
+        Console.WriteLine("Affichage de l'historique d'achat en ordre croissant");
+    }
+
+    if (reply == "3")
+    {
+        Console.WriteLine("Ajout du client ...");
+    }
+
+    if (reply == "4")
+    {
+        Console.WriteLine("Ajout de la voiture ...");
+    }
+
+    if (reply == "5")
+    {
+        Console.WriteLine("Achat de la voiture ...");
+    }
+
+    if (reply == "6")
+    {
+        Console.WriteLine("Retours au menu");
+    }
+    else
+    {
+        Console.WriteLine("Erreur");
+        reply =  Question();
+
+    }
+}
