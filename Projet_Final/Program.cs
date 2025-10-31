@@ -22,4 +22,25 @@ var host = Host.CreateDefaultBuilder(args)
     })
     .Build();
     
+
+
+String path = configuration.GetRequiredSection("CSVFileCar")["CoursSupDeVinci"];
+
+List<Car> car = new List<Car>(); 
+
+var lignes = File.ReadAllLines(path);
+
+for (int i = 1; i < lignes.Length; i++)
+{
+    String line = lignes[i];
+    Car car = new Car();
     
+    person.Lastname = line.Split(',')[1];
+    person.Firstname = line.Split(',')[2];
+    person.Birthdate = DateTimeUtils.ConvertToDateTime(line.Split(',')[3]);
+    person.Size = Int32.Parse(line.Split(',')[5]);
+    
+    List<String> details = line.Split(',')[4].Split(';').ToList();
+    
+
+    car.Add(Car);
