@@ -5,7 +5,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using Projet_Final.Interface;
-using DbContext = Projet_Final.Interface.DbContext;
 
 //créer un lien vers appsetting.json
 var configuration = new ConfigurationBuilder()
