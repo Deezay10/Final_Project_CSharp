@@ -31,7 +31,7 @@ namespace Projet_Final.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<Guid>("ClientId")
+                    b.Property<Guid?>("ClientId")
                         .HasColumnType("uuid");
 
                     b.Property<string>("Color")
@@ -95,9 +95,7 @@ namespace Projet_Final.Migrations
                 {
                     b.HasOne("Projet_Final.Model.Client", "Client")
                         .WithMany("Cars")
-                        .HasForeignKey("ClientId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("ClientId");
 
                     b.Navigation("Client");
                 });

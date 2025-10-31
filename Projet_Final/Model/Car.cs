@@ -26,8 +26,8 @@ public class Car
     public float PriceInclTax { get; set; }
     
     [ForeignKey("Client")]
-    public Guid ClientId { get; set; }
+    public Guid? ClientId { get; set; }
     
-    public Client Client { get; set; }
+    public Client? Client { get; set; }
 
 }

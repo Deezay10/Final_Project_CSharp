@@ -17,8 +17,7 @@ public class DbConnection
     {
         _DbContext = dbContext;
     }
-
-    //ajoute l'objet maClasse dans la base de donnée
+    
     public void SaveFullClasse(Car myCar)
     {
         _DbContext.Add(myCar);
