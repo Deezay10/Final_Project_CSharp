@@ -7,6 +7,7 @@ using Npgsql;
 using Projet_Final.Interface;
 using Projet_Final.Model;
 using Projet_Final.Utils;
+using System.Globalization;
 
 //créer un lien vers appsetting.json
 var configuration = new ConfigurationBuilder()
@@ -40,7 +41,7 @@ for (int i = 1; i < lignes.Length; i++)
     car.Brand = line.Split('/')[0];
     car.Model = line.Split('/')[1];
     car.Year = Int32.Parse(line.Split('/')[2]);
-    car.PriceExlTax = Int32.Parse(line.Split('/')[3]);
+    car.PriceExlTax = float.Parse(line.Split('/')[3], CultureInfo.InvariantCulture);
     car.PriceInclTax = car.PriceExlTax * 1.20f;
     car.Color = line.Split('/')[4];
     car.Status = Boolean.Parse(line.Split('/')[5]);
@@ -57,7 +58,7 @@ var lignes_client = File.ReadAllLines(path2);
 
 for (int f = 1; f < lignes.Length; f++)
 {
-    String client_line = lignes[f];
+    String client_line = lignes_client[f];
     Client client = new Client();
 
     client.Lastname = client_line.Split('%')[0];
@@ -66,9 +67,20 @@ for (int f = 1; f < lignes.Length; f++)
     client.PhoneNumber = client_line.Split('%')[3];
     client.Email = client_line.Split('%')[4];
 
-    clients.Add(client);
+    clients.Add(client);        
         
 }
+
+//Insert :
+var db = host.Services.GetRequiredService<CarDbContext>();
+
+db.Cars.AddRange(cars);
+
+db.Clients.AddRange(clients);
+
+
+db.SaveChanges();
+
 
 //obtenir la liste des voitures (en cours
 //using var scope = host.Services.CreateScope();
