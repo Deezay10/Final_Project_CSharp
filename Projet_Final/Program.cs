@@ -26,7 +26,7 @@ var host = Host.CreateDefaultBuilder(args)
     
 
 
-String path = configuration.GetRequiredSection("CSVFileCar")["CoursSupDeVinci"];
+String path = configuration.GetRequiredSection("CSVFileCar")["Projet_Final2"];
 
 List<Car> cars = new List<Car>(); 
 
@@ -51,7 +51,9 @@ for (int i = 1; i < lignes.Length; i++)
 
 List<Client> clients = new List<Client>();
 
-var lignes_client = File.ReadAllLines(path);
+String path2 = configuration.GetRequiredSection("CSVFileClient")["Projet_Final1"];
+
+var lignes_client = File.ReadAllLines(path2);
 
 for (int f = 1; f < lignes.Length; f++)
 {
