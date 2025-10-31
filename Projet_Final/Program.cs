@@ -74,9 +74,10 @@ for (int f = 1; f < lignes.Length; f++)
 //Insert :
 var db = host.Services.GetRequiredService<CarDbContext>();
 
-db.Cars.AddRange(cars);
 
 db.Clients.AddRange(clients);
+
+db.Cars.AddRange(cars);
 
 
 db.SaveChanges();

@@ -27,7 +27,8 @@ public class CarDbContext :  DbContext
         modelBuilder.Entity<Car>()
             .HasOne(ca => ca.Client)
             .WithMany(cl => cl.Cars)
-            .HasForeignKey(ca => ca.ClientId);
+            .HasForeignKey(ca => ca.ClientId)
+            .IsRequired(false);
     }
 
     // --- Configuration de la connexion ---
