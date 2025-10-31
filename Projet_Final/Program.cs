@@ -75,12 +75,17 @@ for (int f = 1; f < lignes.Length; f++)
 var db = host.Services.GetRequiredService<CarDbContext>();
 
 
-db.Clients.AddRange(clients);
+if (!db.Cars.Any() && !db.Clients.Any())
+{
+    db.Clients.AddRange(clients);
 
-db.Cars.AddRange(cars);
+    db.Cars.AddRange(cars);
 
 
-db.SaveChanges();
+    db.SaveChanges();
+}
+
+
 
 
 //obtenir la liste des voitures (en cours
