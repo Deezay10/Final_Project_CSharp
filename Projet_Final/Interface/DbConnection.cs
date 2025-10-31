@@ -1,4 +1,6 @@
-﻿namespace Projet_Final.Interface;
+﻿using Projet_Final.Model;
+
+namespace Projet_Final.Interface;
 using Npgsql;
 
 
@@ -8,20 +10,20 @@ using Npgsql;
 public class DbConnection
 {
     //création d'une variable en lecture seule
-    private readonly SchoolDbContext _schoolDbContext;
+    private readonly CarDbContext _DbContext;
     
     // constructeur de la classe DbConnection
-    public DbConnection(SchoolDbContext schoolDbContext)
+    public DbConnection(CarDbContext dbContext)
     {
-        _schoolDbContext = schoolDbContext;
+        _DbContext = dbContext;
     }
 
     //ajoute l'objet maClasse dans la base de donnée
-    public void SaveFullClasse(Classe maClasse)
+    public void SaveFullClasse(Car myCar)
     {
-        _schoolDbContext.Add(maClasse);
+        _DbContext.Add(myCar);
         
-        _schoolDbContext.SaveChanges();
+        _DbContext.SaveChanges();
     }
 
 }

@@ -1,23 +1,22 @@
 ﻿using Projet_Final.Model;
 
-namespace Projet_Final.Interface;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-public class DbContext : DBContext
+public class CarDbContext :  DbContext
 {
     // --- Tables principales ---
     public DbSet<Car> Cars { get; set; }
     public DbSet<Client> Clients { get; set; }
 
     // --- Constructeur ---
-    public DbContext(DbContextOptions<DbContext> options)
+    public CarDbContext(DbContextOptions<CarDbContext> options)
         : base(options)
     {
     }
     
     // Constructeur vide pour EF CLI
-    public DbContext() { }
+    public CarDbContext() { }
 
     // --- Configuration des relations ---
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -25,10 +24,10 @@ public class DbContext : DBContext
         base.OnModelCreating(modelBuilder);
 
         // Relation Classe -> Person (1..n)
-        modelBuilder.Entity<Person>()
-            .HasOne(p => p.Classe)
-            .WithMany(c => c.Persons)
-            .HasForeignKey(p => p.IdClasse);
+        modelBuilder.Entity<Car>()
+            .HasOne(ca => ca.Client)
+            .WithMany(cl => cl.Cars)
+            .HasForeignKey(ca => ca.ClientId);
     }
 
     // --- Configuration de la connexion ---
@@ -37,7 +36,7 @@ public class DbContext : DBContext
         // Charger la configuration manuellement
         var configuration = new ConfigurationBuilder()
             .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile(@"C:\\Users\\julie\\RiderProjects\\CoursSupDeVinci\\CoursSupDeVinci\\appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile(@"Projet_Final/appsettings.json", optional: false, reloadOnChange: true)
             .Build();
         
         if (!optionsBuilder.IsConfigured)
