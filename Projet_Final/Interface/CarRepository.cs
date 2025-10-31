@@ -1,7 +1,8 @@
 ﻿using Projet_Final.Model;
+using Microsoft.EntityFrameworkCore;
 
 namespace Projet_Final.Interface;
-using Microsoft.EntityFrameworkCore;
+
 
 public class CarRepository : ICarRepository
 {
