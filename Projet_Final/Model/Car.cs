@@ -21,9 +21,9 @@ public class Car
     
     public string Color { get; set; }
     
-    public int PriceExlTax { get; set; }
+    public float PriceExlTax { get; set; }
     
-    public int PriceInclTax { get; set; }
+    public float PriceInclTax { get; set; }
     
     [ForeignKey("Client")]
     public Guid ClientId { get; set; }

@@ -41,7 +41,7 @@ for (int i = 1; i < lignes.Length; i++)
     car.Model = line.Split('/')[1];
     car.Year = Int32.Parse(line.Split('/')[2]);
     car.PriceExlTax = Int32.Parse(line.Split('/')[3]);
-    car.PriceInclTax = car.PriceExlTax * 1.2;
+    car.PriceInclTax = car.PriceExlTax * 1.20f;
     car.Color = line.Split('/')[4];
     car.Status = Boolean.Parse(line.Split('/')[5]);
 
@@ -49,22 +49,21 @@ for (int i = 1; i < lignes.Length; i++)
     cars.Add(car);
 }
 
-    List<Client> clients = new List<Client>();
+List<Client> clients = new List<Client>();
 
-    var lignes_client = File.ReadAllLines(path);
+var lignes_client = File.ReadAllLines(path);
 
-    for (int f = 1; f < lignes.Length; f++)
-    {
-        String client_line = lignes[f];
-        Client client = new Client();
+for (int f = 1; f < lignes.Length; f++)
+{
+    String client_line = lignes[f];
+    Client client = new Client();
 
-        client.Lastname = line.Split('%')[0];
-        client.Firstname = line.Split('%')[1];
-        client.Birthdate = DateTimeUtils.ConvertToDateTime(line.Split('%')[2]);
-        client.PhoneNumber = line.Split('%')[3];
-        client.Email = line.Split('%')[4];
+    client.Lastname = client_line.Split('%')[0];
+    client.Firstname = client_line.Split('%')[1];
+    client.Birthdate = DateTimeUtils.ConvertToDateTime(client_line.Split('%')[2]);
+    client.PhoneNumber = client_line.Split('%')[3];
+    client.Email = client_line.Split('%')[4];
 
-        clients.Add(client);
+    clients.Add(client);
         
-    }
 }
