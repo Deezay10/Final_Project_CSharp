@@ -16,7 +16,7 @@ var configuration = new ConfigurationBuilder()
 var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
-        services.AddDbContext<DbContext>(options =>
+        services.AddDbContext<CarDbContext>(options =>
             options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
         
         services.AddTransient<DbConnection>();
