@@ -71,13 +71,9 @@ for (int f = 1; f < lignes.Length; f++)
 }
 
 //obtenir la liste des voitures (en cours
-//using var scope = host.Services.CreateScope();
-//ICarRepository carRepository = scope.ServiceProvider.GetRequiredService<ICarRepository>();
-//List<Car> carDb = carRepository.GetAllCar();
-//foreach (var car in cars)
-//{
-    //Console.WriteLine(car.Brand + " " + car.Model + " " + car.Year + " " + car.PriceExlTax);
-//}
+using var scope = host.Services.CreateScope();
+ICarRepository carRepository = scope.ServiceProvider.GetRequiredService<ICarRepository>();
+
 
 
 //fonction qui pose la question à l'utilisateur
@@ -102,6 +98,12 @@ void Main(string[] args)
     if (reply == "1")
     {
         Console.WriteLine("Affichage de la liste des voitures");
+        List<Car> carDb = carRepository.GetCar();
+        foreach (var car in cars)
+        {
+            Console.WriteLine(car.Brand + " " + car.Model + " " + car.Year + " " + car.PriceExlTax);
+        }
+        
     }
 
     if (reply == "2")
@@ -112,6 +114,26 @@ void Main(string[] args)
     if (reply == "3")
     {
         Console.WriteLine("Ajout du client ...");
+        Console.WriteLine("Quel est le nom du client ?");
+        string lastname = Console.ReadLine();
+        Console.WriteLine("Quel est le prenom du client ?");
+        string firstname = Console.ReadLine();
+        Console.WriteLine("Quel est la date de naissance du client ? (ex : 01/01/1900)");
+        string birthdate = Console.ReadLine();
+        Console.WriteLine("Quel est le numero de téléphone du client ?");
+        string phonenumber = Console.ReadLine();
+        Console.WriteLine("Quel est le mail du client ?");
+        string email = Console.ReadLine();
+        
+        Client client = new Client();
+
+        client.Lastname = lastname;
+        client.Firstname = firstname;
+        client.Birthdate = DateTimeUtils.ConvertToDateTime(birthdate);
+        client.PhoneNumber = phonenumber;
+        client.Email = email;
+
+        clients.Add(client);
     }
 
     if (reply == "4")
