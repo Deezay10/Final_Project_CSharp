@@ -75,6 +75,9 @@ for (int f = 1; f < lignes.Length; f++)
 var db = host.Services.GetRequiredService<CarDbContext>();
 
 
+
+
+
 if (!db.Cars.Any() && !db.Clients.Any())
 {
     db.Clients.AddRange(clients);
@@ -91,7 +94,6 @@ if (!db.Cars.Any() && !db.Clients.Any())
 //obtenir la liste des voitures (en cours
 using var scope = host.Services.CreateScope();
 ICarRepository carRepository = scope.ServiceProvider.GetRequiredService<ICarRepository>();
-
 
 
 //fonction qui pose la question à l'utilisateur
