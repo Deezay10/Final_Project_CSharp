@@ -21,5 +21,3 @@ var host = Host.CreateDefaultBuilder(args)
         services.AddTransient<DbConnection>();
     })
     .Build();
-    
-    
