@@ -70,7 +70,14 @@ for (int f = 1; f < lignes.Length; f++)
         
 }
 
-
+//obtenir la liste des voitures (en cours
+//using var scope = host.Services.CreateScope();
+//ICarRepository carRepository = scope.ServiceProvider.GetRequiredService<ICarRepository>();
+//List<Car> carDb = carRepository.GetAllCar();
+//foreach (var car in cars)
+//{
+    //Console.WriteLine(car.Brand + " " + car.Model + " " + car.Year + " " + car.PriceExlTax);
+//}
 
 
 //fonction qui pose la question à l'utilisateur
