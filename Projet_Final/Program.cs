@@ -28,7 +28,7 @@ var host = Host.CreateDefaultBuilder(args)
 
 String path = configuration.GetRequiredSection("CSVFileCar")["CoursSupDeVinci"];
 
-List<Car> car = new List<Car>(); 
+List<Car> cars = new List<Car>(); 
 
 var lignes = File.ReadAllLines(path);
 
@@ -37,15 +37,17 @@ for (int i = 1; i < lignes.Length; i++)
     String line = lignes[i];
     Car car = new Car();
 
-    person.Lastname = line.Split(',')[1];
-    person.Firstname = line.Split(',')[2];
-    person.Birthdate = DateTimeUtils.ConvertToDateTime(line.Split(',')[3]);
-    person.Size = Int32.Parse(line.Split(',')[5]);
+    car.Brand = line.Split('/')[0];
+    car.Model = line.Split('/')[1];
+    car.Year = Int32.Parse(line.Split('/')[2]);
+    car.PriceExlTax = Int32.Parse(line.Split('/')[3]);
+    car.PriceInclTax = car.PriceExlTax * 1.2;
+    car.Color = line.Split('/')[4];
+    car.Status = Boolean.Parse(line.Split('/')[5]);
 
-    List<String> details = line.Split(',')[4].Split(';').ToList();
 
-
-    car.Add(Car);
+    cars.Add(car);
+}
 
     List<Client> clients = new List<Client>();
 
