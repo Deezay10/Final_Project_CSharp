@@ -11,7 +11,7 @@ using Projet_Final.Utils;
 //créer un lien vers appsetting.json
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
-    .AddJsonFile("C:/Users/Nino/Documents/SDV/C#/Projet_Final/Projet_Final/Projet_Final/appsettings.json", optional: false, reloadOnChange: true)
+    .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .Build();
     
 var host = Host.CreateDefaultBuilder(args)

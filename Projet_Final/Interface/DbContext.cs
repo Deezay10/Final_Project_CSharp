@@ -33,14 +33,13 @@ public class CarDbContext :  DbContext
     // --- Configuration de la connexion ---
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
-        // Charger la configuration manuellement
-        var configuration = new ConfigurationBuilder()
-            .SetBasePath(Directory.GetCurrentDirectory())
-            .AddJsonFile("C:/Users/Nino/Documents/SDV/C#/Projet_Final/Projet_Final/appsettings.json", optional: false, reloadOnChange: true)
-            .Build();
-        
         if (!optionsBuilder.IsConfigured)
         {
+            var configuration = new ConfigurationBuilder()
+                .SetBasePath(AppContext.BaseDirectory)
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+
             optionsBuilder.UseNpgsql(configuration.GetConnectionString("DefaultConnection"));
         }
     }
