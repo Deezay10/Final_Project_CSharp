@@ -1,7 +1,6 @@
 ﻿using Projet_Final.Interface.InterfaceRepository;
 using Projet_Final.InterfaceRepository;
 using Projet_Final.Model;
-
 namespace Projet_Final.Interface;
 
 public class CarRepository : ICarRepository

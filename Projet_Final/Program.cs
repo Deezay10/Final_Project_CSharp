@@ -12,6 +12,7 @@ using System.Globalization;
 using Projet_Final.Interface;
 using Projet_Final.Interface.InterfaceRepository;
 
+ Console.WriteLine("le programme se lance...");
 //créer un lien vers appsetting.json
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
