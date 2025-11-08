@@ -108,7 +108,7 @@ static string Question()
                       "\t3) Ajouter un client\n" +
                       "\t4) Ajouter une voiture\n" +
                       "\t5) Faire un achat de voiture\n" +
-                      "fin");
+                      "\t6) fin\n");
 
     string reply = Console.ReadLine();
     return reply;
