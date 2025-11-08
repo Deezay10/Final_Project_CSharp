@@ -1,8 +1,8 @@
 ﻿using Projet_Final.Model;
+using System.Collections.Generic;
+namespace Projet_Final.Interface.InterfaceRepository;
 
-namespace Projet_Final.Interface;
-
-public abstract class ICarRepository
+public interface ICarRepository
 {
-    public abstract List<Car> GetCar();
+    List<Car> GetCar();
 }

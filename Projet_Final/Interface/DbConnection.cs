@@ -1,6 +1,7 @@
-﻿using Projet_Final.Model;
+﻿using Projet_Final.Interface;
+using Projet_Final.Model;
 
-namespace Projet_Final.Interface;
+namespace Projet_Final.InterfaceRepository;
 using Npgsql;
 
 
