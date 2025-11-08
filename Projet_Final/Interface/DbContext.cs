@@ -1,7 +1,8 @@
-﻿
-using Projet_Final.Model;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Projet_Final.Model;
+
+namespace Projet_Final.Interface;
 
 public class CarDbContext :  DbContext
 {

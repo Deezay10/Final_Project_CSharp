@@ -4,10 +4,13 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
-using Projet_Final.Interface;
+using Projet_Final.InterfaceRepository;
+//using Projet_Final.Repository;
 using Projet_Final.Model;
 using Projet_Final.Utils;
 using System.Globalization;
+using Projet_Final.Interface;
+using Projet_Final.Interface.InterfaceRepository;
 
 //créer un lien vers appsetting.json
 var configuration = new ConfigurationBuilder()
@@ -19,14 +22,18 @@ var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddDbContext<CarDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection2")));
         
+        // on enregistre le repository
+        services.AddScoped<ICarRepository, CarRepository>();
+        
+        // on enregistre la classe de connexion
         services.AddTransient<DbConnection>();
     })
     .Build();
     
 
-
+// chargement du CSV pour les cars
 String path = configuration.GetRequiredSection("CSVFileCar")["Projet_Final2"];
 
 List<Car> cars = new List<Car>(); 
@@ -74,26 +81,23 @@ for (int f = 1; f < lignes.Length; f++)
 //Insert :
 var db = host.Services.GetRequiredService<CarDbContext>();
 
-
-
-
-
+//je me suis peut-être trompé...
 if (!db.Cars.Any() && !db.Clients.Any())
 {
     db.Clients.AddRange(clients);
 
     db.Cars.AddRange(cars);
-
-
+    
     db.SaveChanges();
 }
 
-
-
+Console.WriteLine("jusqu'ici, tout va bien !!!!!!");
 
 //obtenir la liste des voitures (en cours)
 using var scope = host.Services.CreateScope();
 ICarRepository carRepository = scope.ServiceProvider.GetRequiredService<ICarRepository>();
+List<Car> cardb = carRepository.GetCar();
+
 
 
 //fonction qui pose la question à l'utilisateur
