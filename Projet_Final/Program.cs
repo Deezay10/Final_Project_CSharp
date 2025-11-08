@@ -174,6 +174,8 @@ if (reply == "4")
     string prixht = Console.ReadLine();
     Console.WriteLine("Quel est son statut (Vendu ou non) (répondre True ou False)");
     string statut = Console.ReadLine();
+    Console.WriteLine("Quel est la couleur de la voiture ?");
+    string couleur = Console.ReadLine();
         
     DateTime annercar = DateTimeUtils.ConvertToDateTime(anne);
         
@@ -186,9 +188,11 @@ if (reply == "4")
     car.Year = annercar.Year;
     car.PriceExlTax = Single.Parse(prixht);
     car.Status = bool.Parse(statut);
+    car.Color = couleur;
 
     //ajouter la voiture à la liste des voitures
-    cars.Add(car);
+    db.Cars.Add(car);
+    db.SaveChanges();
 }
 
 if (reply == "5")
