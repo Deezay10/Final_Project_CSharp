@@ -17,7 +17,7 @@ public class Car
     
     public int Year { get; set; }
     
-    public Boolean Status { get; set; }
+    public Boolean Vendu { get; set; }
     
     public string Color { get; set; }
     

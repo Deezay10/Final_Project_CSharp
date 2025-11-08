@@ -44,7 +44,7 @@ for (int i = 1; i < lignes.Length; i++)
     car.PriceExlTax = float.Parse(line.Split('/')[3], CultureInfo.InvariantCulture);
     car.PriceInclTax = car.PriceExlTax * 1.20f;
     car.Color = line.Split('/')[4];
-    car.Status = Boolean.Parse(line.Split('/')[5]);
+    car.Vendu = Boolean.Parse(line.Split('/')[5]);
 
 
     cars.Add(car);
@@ -75,8 +75,10 @@ for (int f = 1; f < lignes.Length; f++)
 var db = host.Services.GetRequiredService<CarDbContext>();
 
 
+//Si les tables sont vides
 if (!db.Cars.Any() && !db.Clients.Any())
 {
+    //Alors on ajoute les données aux tables
     db.Clients.AddRange(clients);
 
     db.Cars.AddRange(cars);
@@ -84,9 +86,6 @@ if (!db.Cars.Any() && !db.Clients.Any())
 
     db.SaveChanges();
 }
-
-
-
 
 //obtenir la liste des voitures (en cours
 using var scope = host.Services.CreateScope();
