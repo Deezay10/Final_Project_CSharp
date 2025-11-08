@@ -91,7 +91,7 @@ if (!db.Cars.Any() && !db.Clients.Any())
 
 
 
-//obtenir la liste des voitures (en cours
+//obtenir la liste des voitures (en cours)
 using var scope = host.Services.CreateScope();
 ICarRepository carRepository = scope.ServiceProvider.GetRequiredService<ICarRepository>();
 
