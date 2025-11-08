@@ -172,7 +172,7 @@ if (reply == "4")
     string anne = Console.ReadLine();
     Console.WriteLine("Quel est le prix HT de la voiture ?");
     string prixht = Console.ReadLine();
-    Console.WriteLine("Quel est son statut (Vendu ou non) (répondre True ou False)");
+    Console.WriteLine("Quel est son statut (est à vendre ou non) (répondre True ou False)");
     string statut = Console.ReadLine();
     Console.WriteLine("Quel est la couleur de la voiture ?");
     string couleur = Console.ReadLine();
@@ -202,7 +202,8 @@ if (reply == "5")
     Console.WriteLine("Entrez l'ID de la voiture que vous voulez acheter");
     string idcar = Console.ReadLine();
     Guid idcarkey = Guid.Parse(idcar);
-    foreach (var car in cars)
+    
+    foreach (var car in db.Cars)
     {
         //si l'id d'une voiture est == à l'id renseignée
         if (car.Id == idcarkey)
@@ -218,7 +219,7 @@ if (reply == "5")
                 //demander le mail pour trouver le client
                 Console.WriteLine("Quel est votre adresse email ?");
                 string mailpotentialclient = Console.ReadLine();
-                foreach (var client in clients)
+                foreach (var client in db.Clients)
                 {
                     //si le mail d'un client match avec celui renseigné
                     if (client.Email == mailpotentialclient)
@@ -227,6 +228,7 @@ if (reply == "5")
                         car.Status = false;
                         car.ClientId = client.Id;
                         car.Client = client;
+                        db.SaveChanges();
                         Console.WriteLine($"Merci {client.Firstname} d'avoir acheté cette {car.Model}.");
                     }
                     else
@@ -237,13 +239,6 @@ if (reply == "5")
                 }
             }
         }
-        else
-        {
-            Console.WriteLine($"Nous ne possédons pas de voiture avec l'id {idcarkey}.");
-            reply = Question();
-        }
-                
-
     }
 }
 
