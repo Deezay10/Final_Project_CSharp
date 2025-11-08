@@ -23,7 +23,7 @@ var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddDbContext<CarDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection2")));
         
         // on enregistre le repository
         services.AddScoped<ICarRepository, CarRepository>();
