@@ -115,7 +115,9 @@ static string Question()
 }
 //pose la question à l'utilisateur qui déterminera la suite du programme
 string reply = Question();
-    
+
+Console.WriteLine("T'y es le goat vlad, t'as bien pull");
+
 if (reply == "1")
 {
     Console.WriteLine("Affichage de la liste des voitures");
