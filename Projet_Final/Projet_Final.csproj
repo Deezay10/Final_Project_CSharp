@@ -46,6 +46,7 @@
       <Compile Update="Model\Car.cs">
         <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Compile>
+      <Compile Remove="Migrations\CarDbContextModelSnapshot.cs" />
     </ItemGroup>
 
 </Project>

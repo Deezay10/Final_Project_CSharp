@@ -29,5 +29,6 @@ public class Car
     public Guid? ClientId { get; set; }
     
     public Client? Client { get; set; }
+    public Purchase Purchase { get; set; }
 
 }

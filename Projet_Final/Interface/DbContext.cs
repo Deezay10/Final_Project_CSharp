@@ -8,6 +8,8 @@ public class CarDbContext :  DbContext
     // --- Tables principales ---
     public DbSet<Car> Cars { get; set; }
     public DbSet<Client> Clients { get; set; }
+    
+    public DbSet<Purchase> Purchases { get; set; }
 
     // --- Constructeur ---
     public CarDbContext(DbContextOptions<CarDbContext> options)
@@ -28,6 +30,18 @@ public class CarDbContext :  DbContext
             .HasOne(ca => ca.Client)
             .WithMany(cl => cl.Cars)
             .HasForeignKey(ca => ca.ClientId)
+            .IsRequired(false);
+        
+        modelBuilder.Entity<Purchase>()
+            .HasOne(p => p.Car)
+            .WithOne(car => car.Purchase)
+            .HasForeignKey<Purchase>(p => p.CarId)
+            .IsRequired(false);
+        
+        modelBuilder.Entity<Purchase>()
+            .HasOne(p => p.Client)
+            .WithOne(cl => cl.Purchase)
+            .HasForeignKey<Purchase>(p => p.ClientId)
             .IsRequired(false);
     }
 

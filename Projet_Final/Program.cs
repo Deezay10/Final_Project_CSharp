@@ -14,6 +14,7 @@ using Projet_Final.Interface.InterfaceRepository;
 
 Console.WriteLine("le programme se lance...");
 Console.WriteLine("T'y es le goat vlad, t'as bien pull");
+
 //créer un lien vers appsetting.json
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -83,7 +84,7 @@ for (int f = 1; f < lignes.Length; f++)
 //Insert :
 var db = host.Services.GetRequiredService<CarDbContext>();
 
-//je me suis peut-être trompé...
+
 if (!db.Cars.Any() && !db.Clients.Any())
 {
     db.Clients.AddRange(clients);
@@ -96,7 +97,7 @@ if (!db.Cars.Any() && !db.Clients.Any())
 Console.WriteLine("jusqu'ici, tout va bien !!!!!!");
 
 
-//fonction qui pose la question à l'utilisateur
+//Fonction qui pose la question à l'utilisateur
 static string Question()
 {
     Console.WriteLine("\t1) Voir liste voiture\n" +
@@ -109,9 +110,8 @@ static string Question()
     string reply = Console.ReadLine();
     return reply;
 }
-//pose la question à l'utilisateur qui déterminera la suite du programme
+//Pose la question à l'utilisateur qui déterminera la suite du programme
 string reply = Question();
-
 
 
 if (reply == "1")

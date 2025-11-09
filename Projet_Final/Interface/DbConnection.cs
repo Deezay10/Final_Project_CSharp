@@ -4,9 +4,6 @@ using Projet_Final.Model;
 namespace Projet_Final.InterfaceRepository;
 using Npgsql;
 
-
-//code du formateur à adapter à nos besoins
-
 //déclare une classe DbConnection accessible dans d'autres parties du code
 public class DbConnection
 {
