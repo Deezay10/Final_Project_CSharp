@@ -12,7 +12,8 @@ using System.Globalization;
 using Projet_Final.Interface;
 using Projet_Final.Interface.InterfaceRepository;
 
- Console.WriteLine("le programme se lance...");
+Console.WriteLine("le programme se lance...");
+Console.WriteLine("T'y es le goat vlad, t'as bien pull");
 //créer un lien vers appsetting.json
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -23,7 +24,7 @@ var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddDbContext<CarDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection2")));
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
         
         // on enregistre le repository
         services.AddScoped<ICarRepository, CarRepository>();
@@ -94,12 +95,6 @@ if (!db.Cars.Any() && !db.Clients.Any())
 
 Console.WriteLine("jusqu'ici, tout va bien !!!!!!");
 
-//obtenir la liste des voitures (en cours)
-using var scope = host.Services.CreateScope();
-ICarRepository carRepository = scope.ServiceProvider.GetRequiredService<ICarRepository>();
-List<Car> cardb = carRepository.GetCar();
-
-
 
 //fonction qui pose la question à l'utilisateur
 static string Question()
@@ -117,11 +112,14 @@ static string Question()
 //pose la question à l'utilisateur qui déterminera la suite du programme
 string reply = Question();
 
-Console.WriteLine("T'y es le goat vlad, t'as bien pull");
+
 
 if (reply == "1")
 {
+    // On affiche la liste des voitures
     Console.WriteLine("Affichage de la liste des voitures");
+    using var scope = host.Services.CreateScope();
+    ICarRepository carRepository = scope.ServiceProvider.GetRequiredService<ICarRepository>();
     List<Car> carDb = carRepository.GetCar();
     foreach (var car in cars)
     {
@@ -138,6 +136,8 @@ if (reply == "2")
 if (reply == "3")
 {
     Console.WriteLine("Ajout du client ...");
+    
+    //Demande des caractéristiques du nouveau client
     Console.WriteLine("Quel est le nom du client ?");
     string lastname = Console.ReadLine();
     Console.WriteLine("Quel est le prenom du client ?");
@@ -148,25 +148,27 @@ if (reply == "3")
     string phonenumber = Console.ReadLine();
     Console.WriteLine("Quel est le mail du client ?");
     string email = Console.ReadLine();
-        
+    
+    //Création du nouveau client
     Client client = new Client();
 
+    //Implémentation des variables 
     client.Lastname = lastname;
     client.Firstname = firstname;
     client.Birthdate = DateTimeUtils.ConvertToDateTime(birthdate);
     client.PhoneNumber = phonenumber;
     client.Email = email;
-
+    
+    //Ajouter le client à la liste des clients
     db.Clients.Add(client);
     db.SaveChanges();
 }
 
 if (reply == "4")
 {
-    //demande des caractéristiques de la nouvelle voiture
-        
     Console.WriteLine("Ajout de la voiture ...");
-
+    
+    //Demande des caractéristiques de la nouvelle voiture
     Console.WriteLine("Quel est la marque de la voiture ?");
     string marque = Console.ReadLine();
     Console.WriteLine("Quel est le modèle de la voiture");
@@ -179,13 +181,12 @@ if (reply == "4")
     string statut = Console.ReadLine();
     Console.WriteLine("Quel est la couleur de la voiture ?");
     string couleur = Console.ReadLine();
-        
     DateTime annercar = DateTimeUtils.ConvertToDateTime(anne);
         
     //création de la nouvelle voiture
     Car car = new Car();
 
-    //implémentation des variables 
+    //Implémentation des variables 
     car.Brand = marque;
     car.Model = modele;
     car.Year = annercar.Year;
@@ -193,65 +194,49 @@ if (reply == "4")
     car.Status = bool.Parse(statut);
     car.Color = couleur;
 
-    //ajouter la voiture à la liste des voitures
+    //Ajouter la voiture à la liste des voitures
     db.Cars.Add(car);
     db.SaveChanges();
 }
 
 if (reply == "5")
 {
-    //demande l'identifiant de la voiture pour la trouver dans la liste des voitures
+    //Demande l'identifiant de la voiture pour la trouver dans la liste des voitures
     Console.WriteLine("Achat de la voiture ...");
     Console.WriteLine("Entrez l'ID de la voiture que vous voulez acheter");
     string idcar = Console.ReadLine();
     Guid idcarkey = Guid.Parse(idcar);
-    
-    foreach (var car in db.Cars)
+    var car = db.Cars.FirstOrDefault(c => c.Id == idcarkey);
+    if (car != null)
     {
-        //si l'id d'une voiture est == à l'id renseignée
-        if (car.Id == idcarkey)
+        //Si le status de la voiture est déjà vendu
+        if (car.Status == false)
         {
-            //Si le status de la voiture est déjà false
-            if (car.Status == false)
-            {
-                Console.WriteLine($"Vous ne pouvez pas acheter cette {car.Model} car elle a déjà été vendue");
-                reply = Question();
-            }
-            else
-            {
-                //demander le mail pour trouver le client
-                Console.WriteLine("Quel est votre adresse email ?");
-                string mailpotentialclient = Console.ReadLine();
-                foreach (var client in db.Clients)
-                {
-                    //si le mail d'un client match avec celui renseigné
-                    if (client.Email == mailpotentialclient)
-                    {
-                        //modification des informations de cette voiture (on y ajoute le client)
-                        car.Status = false;
-                        car.ClientId = client.Id;
-                        car.Client = client;
-                        db.SaveChanges();
-                        Console.WriteLine($"Merci {client.Firstname} d'avoir acheté cette {car.Model}.");
-                    }
-                    else
-                    {
-                        Console.WriteLine($"Le mail {mailpotentialclient} n'appartient à aucun client enregistré.");
-                        reply = Question();
-                    }
-                }
-            }
+            Console.WriteLine($"Vous ne pouvez pas acheter cette {car.Model} car elle a déjà été vendue");
+            reply = Question();
         }
+        else
+        {
+            //Demander le mail pour trouver le client
+            Console.WriteLine("Quel est votre adresse email ?");
+            string mailpotentialclient = Console.ReadLine();
+            
+            //On récupère le client qui a la même adresse mail que celle entrée
+            var client = db.Clients.FirstOrDefault(c => c.Email == mailpotentialclient);
+            
+            //On modifie les caractéristiques de la voiture que le client viens d'acheter
+            car.Status = false;
+            car.ClientId = client.Id;
+            car.Client = client;
+            db.SaveChanges();
+            Console.WriteLine($"Merci {client.Firstname} d'avoir acheté cette {car.Model}.");
+            
+        }
+            
     }
 }
 
 if (reply == "6")
 {
-    Console.WriteLine("Retours au menu");
-}
-else
-{
-    Console.WriteLine("Erreur");
-    reply =  Question();
-
+    Console.WriteLine("Fin du Menu");
 }
