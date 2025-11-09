@@ -11,14 +11,7 @@ public class Purchase
     [Key] 
     public Guid Id { get; set; } = Guid.NewGuid();
     
-    public string car_brand { get; set; }
-    
-    public string car_model { get; set; }
-    
-    public string client_lastname { get; set; }
-    
-    public string client_email { get; set; }
-    
+    public DateTime purchase_date { get; set; }
     
     [ForeignKey("Client")]
     public Guid? ClientId { get; set; }

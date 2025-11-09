@@ -40,8 +40,8 @@ public class CarDbContext :  DbContext
         
         modelBuilder.Entity<Purchase>()
             .HasOne(p => p.Client)
-            .WithOne(cl => cl.Purchase)
-            .HasForeignKey<Purchase>(p => p.ClientId)
+            .WithMany(cl => cl.Purchases)
+            .HasForeignKey(p => p.ClientId)
             .IsRequired(false);
     }
 

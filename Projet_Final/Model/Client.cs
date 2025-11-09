@@ -22,5 +22,5 @@ public class Client
     // Relation 1..n : un client peut avoir plusieurs voitures
     public ICollection<Car> Cars { get; set; } = new List<Car>();
     
-    public Purchase Purchase { get; set; }
+    public List<Purchase> Purchases { get; set; } = new();
 }

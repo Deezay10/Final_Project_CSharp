@@ -5,7 +5,6 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Npgsql;
 using Projet_Final.InterfaceRepository;
-//using Projet_Final.Repository;
 using Projet_Final.Model;
 using Projet_Final.Utils;
 using System.Globalization;
@@ -29,12 +28,13 @@ var host = Host.CreateDefaultBuilder(args)
         
         // on enregistre le repository
         services.AddScoped<ICarRepository, CarRepository>();
+        services.AddTransient<IPurchaseRepository, PurchaseRepository>();
         
         // on enregistre la classe de connexion
         services.AddTransient<DbConnection>();
     })
     .Build();
-    
+
 
 // chargement du CSV pour les cars
 String path = configuration.GetRequiredSection("CSVFileCar")["Projet_Final2"];
@@ -131,6 +131,16 @@ if (reply == "1")
 if (reply == "2")
 {
     Console.WriteLine("Affichage de l'historique d'achat en ordre croissant");
+    
+    using var scope = host.Services.CreateScope();
+    IPurchaseRepository purchaseRepository = scope.ServiceProvider.GetRequiredService<IPurchaseRepository>();
+
+    List<Purchase> purchases = purchaseRepository.GetPurchases();
+
+    foreach (var purchase in purchases)
+    {
+        Console.WriteLine(purchase.Id + " " + purchase.purchase_date + " " + purchase.Car?.Brand + " " + purchase.Car?.Model + " " + purchase.Client?.Lastname + " " + purchase.Client?.Firstname);
+    }
 }
 
 if (reply == "3")
@@ -224,10 +234,19 @@ if (reply == "5")
             //On récupère le client qui a la même adresse mail que celle entrée
             var client = db.Clients.FirstOrDefault(c => c.Email == mailpotentialclient);
             
+            //Demander quand la voiture a été acheté
+            Console.WriteLine($"Quand la voiture {car.Brand} {car.Model} a été vendue ?");
+            string purchase_date = Console.ReadLine();
+            
             //On modifie les caractéristiques de la voiture que le client viens d'acheter
             car.Status = false;
             car.ClientId = client.Id;
             car.Client = client;
+            Purchase purchase = new Purchase();
+            purchase.purchase_date = DateTimeUtils.ConvertToDateTime(purchase_date);
+            purchase.Car = car;
+            purchase.Client = client;
+            db.Purchases.Add(purchase);
             db.SaveChanges();
             Console.WriteLine($"Merci {client.Firstname} d'avoir acheté cette {car.Model}.");
             
