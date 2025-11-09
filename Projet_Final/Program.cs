@@ -12,6 +12,7 @@ using System.Globalization;
 using Projet_Final.Interface;
 using Projet_Final.Interface.InterfaceRepository;
 
+ Console.WriteLine("le programme se lance...");
 //créer un lien vers appsetting.json
 var configuration = new ConfigurationBuilder()
     .SetBasePath(Directory.GetCurrentDirectory())
@@ -22,7 +23,7 @@ var host = Host.CreateDefaultBuilder(args)
     .ConfigureServices(services =>
     {
         services.AddDbContext<CarDbContext>(options =>
-            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection")));
+            options.UseNpgsql(configuration.GetConnectionString("DefaultConnection2")));
         
         // on enregistre le repository
         services.AddScoped<ICarRepository, CarRepository>();

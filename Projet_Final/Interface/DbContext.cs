@@ -3,7 +3,6 @@ using Microsoft.Extensions.Configuration;
 using Projet_Final.Model;
 
 namespace Projet_Final.Interface;
-
 public class CarDbContext :  DbContext
 {
     // --- Tables principales ---
