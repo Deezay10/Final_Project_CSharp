@@ -17,7 +17,7 @@ public class PurchaseRepository : IPurchaseRepository
         return _dbContext.Purchases
             .Include(p => p.Car)
             .Include(p => p.Client)
-            .OrderBy(p => p.purchase_date) // Tri ascendant ✅
+            .OrderByDescending(p => p.purchase_date)
             .ToList();
     }
 }
