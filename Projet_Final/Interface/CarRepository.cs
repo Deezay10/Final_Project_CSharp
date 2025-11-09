@@ -12,7 +12,7 @@ public class CarRepository : ICarRepository
         _dbContext = dbContext;
     }
 
-    //fonction getcar pour obtenir la liste des voitures
+    //Fonction getcar pour obtenir la liste des voitures
     public List<Car> GetCar()
     {
         return _dbContext.Cars.ToList();

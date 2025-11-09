@@ -12,7 +12,6 @@ using Projet_Final.Interface;
 using Projet_Final.Interface.InterfaceRepository;
 
 Console.WriteLine("le programme se lance...");
-Console.WriteLine("T'y es le goat vlad, t'as bien pull");
 
 //créer un lien vers appsetting.json
 var configuration = new ConfigurationBuilder()
@@ -94,14 +93,11 @@ if (!db.Cars.Any() && !db.Clients.Any())
     db.SaveChanges();
 }
 
-Console.WriteLine("jusqu'ici, tout va bien !!!!!!");
-
-
 //Fonction qui pose la question à l'utilisateur
 static string Question()
 {
     Console.WriteLine("\t1) Voir liste voiture\n" +
-                      "\t2) Historique d'achat (croissant)\n" +
+                      "\t2) Historique d'achat (Plus récent au plus ancien)\n" +
                       "\t3) Ajouter un client\n" +
                       "\t4) Ajouter une voiture\n" +
                       "\t5) Faire un achat de voiture\n" +
@@ -131,7 +127,6 @@ if (reply == "1")
 if (reply == "2")
 {
     Console.WriteLine("Affichage de l'historique d'achat en ordre croissant");
-    
     using var scope = host.Services.CreateScope();
     IPurchaseRepository purchaseRepository = scope.ServiceProvider.GetRequiredService<IPurchaseRepository>();
 
@@ -181,19 +176,19 @@ if (reply == "4")
     //Demande des caractéristiques de la nouvelle voiture
     Console.WriteLine("Quel est la marque de la voiture ?");
     string marque = Console.ReadLine();
-    Console.WriteLine("Quel est le modèle de la voiture");
+    Console.WriteLine("Quel est le modèle de la voiture ?");
     string modele = Console.ReadLine();
-    Console.WriteLine("Quel est l'année de construction de la voiture (ex : 01/01/1900)");
+    Console.WriteLine("Quel est l'année de construction de la voiture ? (ex : 01/01/1900)");
     string anne = Console.ReadLine();
     Console.WriteLine("Quel est le prix HT de la voiture ?");
     string prixht = Console.ReadLine();
-    Console.WriteLine("Quel est son statut (est à vendre ou non) (répondre True ou False)");
+    Console.WriteLine("Quel est son statut ? (est à vendre ou non) (répondre True ou False)");
     string statut = Console.ReadLine();
     Console.WriteLine("Quel est la couleur de la voiture ?");
     string couleur = Console.ReadLine();
     DateTime annercar = DateTimeUtils.ConvertToDateTime(anne);
         
-    //création de la nouvelle voiture
+    //Création de la nouvelle voiture
     Car car = new Car();
 
     //Implémentation des variables 
@@ -219,10 +214,10 @@ if (reply == "5")
     var car = db.Cars.FirstOrDefault(c => c.Id == idcarkey);
     if (car != null)
     {
-        //Si le status de la voiture est déjà vendu
+        //Si la voiture a été vendue
         if (car.Status == false)
         {
-            Console.WriteLine($"Vous ne pouvez pas acheter cette {car.Model} car elle a déjà été vendue");
+            Console.WriteLine($"Vous ne pouvez pas acheter cette {car.Brand} {car.Model} car elle a déjà été vendue");
             reply = Question();
         }
         else
@@ -231,7 +226,7 @@ if (reply == "5")
             Console.WriteLine("Quel est votre adresse email ?");
             string mailpotentialclient = Console.ReadLine();
             
-            //On récupère le client qui a la même adresse mail que celle entrée
+            //On récupère le client qui a le même mail
             var client = db.Clients.FirstOrDefault(c => c.Email == mailpotentialclient);
             
             //Demander quand la voiture a été acheté
@@ -242,13 +237,20 @@ if (reply == "5")
             car.Status = false;
             car.ClientId = client.Id;
             car.Client = client;
+            
+            //Création d'un nouvel achat
             Purchase purchase = new Purchase();
+            
+            //Implémentation des variables
             purchase.purchase_date = DateTimeUtils.ConvertToDateTime(purchase_date);
             purchase.Car = car;
             purchase.Client = client;
+            
+            //Ajout de l'achat à la liste des achats
             db.Purchases.Add(purchase);
             db.SaveChanges();
-            Console.WriteLine($"Merci {client.Firstname} d'avoir acheté cette {car.Model}.");
+            
+            Console.WriteLine($"Merci {client.Firstname} d'avoir acheté cette {car.Brand} {car.Model}.");
             
         }
             

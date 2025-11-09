@@ -25,10 +25,14 @@ public class Car
     
     public float PriceInclTax { get; set; }
     
+    // Clé étrangère pour relier la table Purchase à la table Client
+    
     [ForeignKey("Client")]
     public Guid? ClientId { get; set; }
     
     public Client? Client { get; set; }
+    
+    // Relation 1..1 : une voiture se vend qu'une seule fois
     public Purchase Purchase { get; set; }
 
 }

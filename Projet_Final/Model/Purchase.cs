@@ -13,11 +13,13 @@ public class Purchase
     
     public DateTime purchase_date { get; set; }
     
+    // Clé étrangère pour relier la table Purchase à la table Client
     [ForeignKey("Client")]
     public Guid? ClientId { get; set; }
     
     public Client? Client { get; set; }
     
+    // Clé étrangère pour relier la table Purchase à la table Car
     [ForeignKey("Car")]
     public Guid? CarId { get; set; }
     

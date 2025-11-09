@@ -12,6 +12,7 @@ public class PurchaseRepository : IPurchaseRepository
         _dbContext = dbContext;
     }
 
+    //Fonction getpurchase pour obtenir la liste des achats du plus récent au plus ancien
     public List<Purchase> GetPurchases()
     {
         return _dbContext.Purchases

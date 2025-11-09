@@ -4,13 +4,13 @@ using Projet_Final.Model;
 namespace Projet_Final.InterfaceRepository;
 using Npgsql;
 
-//déclare une classe DbConnection accessible dans d'autres parties du code
+//Déclare une classe DbConnection accessible dans d'autres parties du code
 public class DbConnection
 {
-    //création d'une variable en lecture seule
+    //Création d'une variable en lecture seule
     private readonly CarDbContext _DbContext;
     
-    // constructeur de la classe DbConnection
+    //Constructeur de la classe DbConnection
     public DbConnection(CarDbContext dbContext)
     {
         _DbContext = dbContext;
